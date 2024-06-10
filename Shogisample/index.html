@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<script src="Shogi_Piece.js"></script>
+<script src="Shogi_Rect.js"></script>
+<script src="Shogi_Hand.js"></script>
+<script src="Shogi_Board.js"></script>
+<script src="Shogi_BoardProcesser.js"></script>
+<script src="Shogi_Game.js"></script>
+<script src="Shogi_Component.js"></script>
+<script src="Shogi_Button.js"></script>
+<script src="Shogi_Header.js"></script>
+<script src="Shogi_BoardView.js"></script>
+<script src="Shogi_TableView.js"></script>
+<script src="Shogi.js"></script>
+<script src="Shogi_PlayerDialog.js"></script>
+<script>
+function xshogi_init() {
+    var width = document.getElementById('xshogi').clientWidth;
+    var game = new Shogi();
+    game.setRect(0, 0, width, Math.floor(width * 1.5));
+    game.setElement(document.getElementById('xshogi'));
+}
+
+window.addEventListener('load', xshogi_init);
+</script>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+}
+</style>
+</head>
+<body>
+
+<div id="xshogi" style="padding: 0; margin: 0; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;">
+</div>
+
+<p style="margin-top: 0.5rem; margin-bottom: 0.5rem; margin-left: 0.25rem;"><a href="http://www.programmingmat.jp/">創作プログラミングの街</a></p>
+
+</body>
+</html>
