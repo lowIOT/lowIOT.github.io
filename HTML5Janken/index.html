@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>じゃんけんゲーム</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="start-screen" class="screen">
+        <h1>じゃんけんゲーム</h1>
+        <button id="start-button">ゲーム開始</button>
+    </div>
+
+    <div id="game-screen" class="screen hidden">
+        <div class="container">
+            <h1>じゃんけんゲーム</h1>
+            <div class="player-options">
+                <button id="rock">グー</button>
+                <button id="paper">パー</button>
+                <button id="scissors">チョキ</button>
+                <button id="special-move" class="hidden">特別な手</button>
+            </div>
+            <div class="game-info">
+                <div class="player">
+                    <h2>プレイヤー</h2>
+                    <div id="player-choice" class="choice">?</div>
+                </div>
+                <div class="cpu">
+                    <h2>CPU</h2>
+                    <div id="cpu-choice" class="choice">?</div>
+                </div>
+            </div>
+            <div class="result">
+                <h2 id="result-text"></h2>
+            </div>
+            <div class="status">
+                <p id="stage-info">ステージ: 1</p>
+                <p id="win-count">勝利数: 0</p>
+                <p id="lose-count">敗北数: 0</p>
+                <p id="special-move-count">特別な手ストック: 0</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-over-screen" class="screen hidden">
+        <h1>ゲームオーバー</h1>
+        <button id="restart-button">再挑戦</button>
+    </div>
+
+    <div id="bonus-screen" class="screen hidden">
+        <h1>おめでとう！次のステージへ</h1>
+        <div id="cut-in">
+            <img id="bonus-image" src="" alt="ボーナス画像">
+        </div>
+        <button id="next-stage-button">次のステージ</button>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
