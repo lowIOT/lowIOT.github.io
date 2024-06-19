@@ -22,7 +22,16 @@ document.addEventListener('DOMContentLoaded', () => {
             dialogues: [
                 "こんにちは、どうぞよろしくね！",
                 "もっとお話ししたいな。",
-                "君と一緒にいると楽しいね！"
+                "君と一緒にいると楽しいね！",
+                "君と話すのが本当に楽しいよ！",
+                "こんなに楽しいのは久しぶりだよ！"
+            ],
+            choices: [
+                ["選択肢1-1", "選択肢1-2", "選択肢1-3"],
+                ["選択肢2-1", "選択肢2-2", "選択肢2-3"],
+                ["選択肢3-1", "選択肢3-2", "選択肢3-3"],
+                ["選択肢4-1", "選択肢4-2", "選択肢4-3"],
+                ["選択肢5-1", "選択肢5-2", "選択肢5-3"]
             ],
             images: [
                 "images/character1_neutral.png",
@@ -34,7 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
             dialogues: [
                 "おい、お前何見てんだよ！",
                 "まあ、少しは話してやってもいいけど。",
-                "ふん、一緒にいるのも悪くないかもな。"
+                "ふん、一緒にいるのも悪くないかもな。",
+                "お前って意外と面白いな。",
+                "お前と話すのは楽しいな！"
+            ],
+            choices: [
+                ["選択肢1-1", "選択肢1-2", "選択肢1-3"],
+                ["選択肢2-1", "選択肢2-2", "選択肢2-3"],
+                ["選択肢3-1", "選択肢3-2", "選択肢3-3"],
+                ["選択肢4-1", "選択肢4-2", "選択肢4-3"],
+                ["選択肢5-1", "選択肢5-2", "選択肢5-3"]
             ],
             images: [
                 "images/character2_neutral.png",
@@ -46,7 +64,16 @@ document.addEventListener('DOMContentLoaded', () => {
             dialogues: [
                 "こんにちは、ごきげんよう。",
                 "もう少しお話しできますか？",
-                "あなたと過ごす時間がとても楽しいですわ。"
+                "あなたと過ごす時間がとても楽しいですわ。",
+                "あなたのお話、とても興味深いですわ。",
+                "あなたと話していると、とても楽しいですわ！"
+            ],
+            choices: [
+                ["選択肢1-1", "選択肢1-2", "選択肢1-3"],
+                ["選択肢2-1", "選択肢2-2", "選択肢2-3"],
+                ["選択肢3-1", "選択肢3-2", "選択肢3-3"],
+                ["選択肢4-1", "選択肢4-2", "選択肢4-3"],
+                ["選択肢5-1", "選択肢5-2", "選択肢5-3"]
             ],
             images: [
                 "images/character3_neutral.png",
@@ -95,8 +122,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateGame() {
         const data = characterData[selectedCharacter];
-        dialogue.textContent = data.dialogues[Math.min(Math.floor(score / 4), data.dialogues.length - 1)];
+        const dialogueIndex = Math.min(Math.floor(score / 2), data.dialogues.length - 1);
+        dialogue.textContent = data.dialogues[dialogueIndex];
         characterImage.src = data.images[Math.min(Math.floor(score / 4), data.images.length - 1)];
+        updateChoices(data.choices[dialogueIndex]);
     }
 
     function randomizeChoices() {
@@ -104,7 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const shuffledPoints = choicePoints.sort(() => Math.random() - 0.5);
         choiceButtons.forEach((button, index) => {
             button.setAttribute('data-points', shuffledPoints[index]);
-            button.textContent = `選択肢${index + 1}`;
+        });
+    }
+
+    function updateChoices(choices) {
+        choiceButtons.forEach((button, index) => {
+            button.textContent = choices[index];
         });
     }
 
