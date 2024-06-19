@@ -27,17 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 "こんなに楽しいのは久しぶりだよ！"
             ],
             choices: [
-                ["選択肢1-1", "選択肢1-2", "選択肢1-3"],
-                ["選択肢2-1", "選択肢2-2", "選択肢2-3"],
-                ["選択肢3-1", "選択肢3-2", "選択肢3-3"],
-                ["選択肢4-1", "選択肢4-2", "選択肢4-3"],
-                ["選択肢5-1", "選択肢5-2", "選択肢5-3"]
+                ["そうだね！", "まあ、そうかもね。", "いや、違うよ。"],
+                ["それはいいね！", "そうだね。", "あまり興味ないな。"],
+                ["君って面白いね！", "まあまあかな。", "全然だめだね。"],
+                ["一緒にいると楽しい！", "うん、まあね。", "そんなことないよ。"],
+                ["また会いたいな！", "機会があればね。", "もういいかな。"]
             ],
             images: [
                 "images/character1_neutral.png",
                 "images/character1_happy.png",
-                "images/character1_very_happy.png"
-            ]
+                "images/character1_very_happy.png",
+                "images/character1_negative.png"
+            ],
+            reward: "images/reward1.png"
         },
         2: {
             dialogues: [
@@ -48,17 +50,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 "お前と話すのは楽しいな！"
             ],
             choices: [
-                ["選択肢1-1", "選択肢1-2", "選択肢1-3"],
-                ["選択肢2-1", "選択肢2-2", "選択肢2-3"],
-                ["選択肢3-1", "選択肢3-2", "選択肢3-3"],
-                ["選択肢4-1", "選択肢4-2", "選択肢4-3"],
-                ["選択肢5-1", "選択肢5-2", "選択肢5-3"]
+                ["見てるだけだよ。", "まあまあかな。", "何も見てないよ。"],
+                ["そうだね！", "まあ、そうかもね。", "いや、違うよ。"],
+                ["君って面白いね！", "まあまあかな。", "全然だめだね。"],
+                ["一緒にいると楽しい！", "うん、まあね。", "そんなことないよ。"],
+                ["また会いたいな！", "機会があればね。", "もういいかな。"]
             ],
             images: [
                 "images/character2_neutral.png",
                 "images/character2_happy.png",
-                "images/character2_very_happy.png"
-            ]
+                "images/character2_very_happy.png",
+                "images/character2_negative.png"
+            ],
+            reward: "images/reward2.png"
         },
         3: {
             dialogues: [
@@ -69,17 +73,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 "あなたと話していると、とても楽しいですわ！"
             ],
             choices: [
-                ["選択肢1-1", "選択肢1-2", "選択肢1-3"],
-                ["選択肢2-1", "選択肢2-2", "選択肢2-3"],
-                ["選択肢3-1", "選択肢3-2", "選択肢3-3"],
-                ["選択肢4-1", "選択肢4-2", "選択肢4-3"],
-                ["選択肢5-1", "選択肢5-2", "選択肢5-3"]
+                ["ごきげんよう。", "そうですね。", "さようなら。"],
+                ["もちろんです！", "まあ、少しなら。", "すみません、忙しいです。"],
+                ["私も楽しいです。", "そうですね。", "それはどうでしょうか。"],
+                ["ありがとうございます！", "まあまあですね。", "そうでもないです。"],
+                ["私もです！", "そうですね。", "それはないです。"]
             ],
             images: [
                 "images/character3_neutral.png",
                 "images/character3_happy.png",
-                "images/character3_very_happy.png"
-            ]
+                "images/character3_very_happy.png",
+                "images/character3_negative.png"
+            ],
+            reward: "images/reward3.png"
         }
     };
 
@@ -107,11 +113,9 @@ document.addEventListener('DOMContentLoaded', () => {
     choiceButtons.forEach(button => {
         button.addEventListener('click', (e) => {
             const points = parseInt(e.target.getAttribute('data-points'));
-            score = Math.min(10, score + points);
+            score = Math.max(0, score + points); // Ensure score doesn't go below 0
             attempts++;
-            if (score >= 10) {
-                showReward();
-            } else if (attempts >= maxAttempts) {
+            if (attempts >= maxAttempts) {
                 endGame();
             } else {
                 updateGame();
@@ -124,7 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = characterData[selectedCharacter];
         const dialogueIndex = Math.min(Math.floor(score / 2), data.dialogues.length - 1);
         dialogue.textContent = data.dialogues[dialogueIndex];
-        characterImage.src = data.images[Math.min(Math.floor(score / 4), data.images.length - 1)];
+        const imageIndex = score > 0 ? Math.min(Math.floor(score / 4), data.images.length - 2) : data.images.length - 1;
+        characterImage.src = data.images[imageIndex];
         updateChoices(data.choices[dialogueIndex]);
     }
 
@@ -146,7 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
         gameScreen.style.display = 'none';
         endScreen.style.display = 'block';
         finalScore.textContent = `最終好感度: ${score}`;
-        if (score > 6 && score <= 9) {
+        if (score >= 10) {
+            endImage.src = characterData[selectedCharacter].reward;
+            endMessage.textContent = 'ご褒美画像';
+        } else if (score > 6 && score <= 9) {
             endImage.src = 'images/gameover_A.png';
             endMessage.textContent = 'ゲームオーバーA';
         } else if (score > 3 && score <= 6) {
@@ -156,13 +164,5 @@ document.addEventListener('DOMContentLoaded', () => {
             endImage.src = 'images/gameover_C.png';
             endMessage.textContent = 'ゲームオーバーC';
         }
-    }
-
-    function showReward() {
-        gameScreen.style.display = 'none';
-        endScreen.style.display = 'block';
-        finalScore.textContent = `最終好感度: ${score}`;
-        endImage.src = 'images/reward.png';
-        endMessage.textContent = 'ご褒美画像';
     }
 });
