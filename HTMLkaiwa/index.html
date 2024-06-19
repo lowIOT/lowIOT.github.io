@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ギャルゲー</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="start-screen" id="startScreen">
+        <h1>ギャルゲー</h1>
+        <p>キャラクターを選択してください:</p>
+        <div class="character-selection">
+            <button class="character-button" data-character="1">
+                <img src="images/character1_neutral.png" alt="キャラクター1">
+                <p>キャラクター1</p>
+            </button>
+            <button class="character-button" data-character="2">
+                <img src="images/character2_neutral.png" alt="キャラクター2">
+                <p>キャラクター2</p>
+            </button>
+            <button class="character-button" data-character="3">
+                <img src="images/character3_neutral.png" alt="キャラクター3">
+                <p>キャラクター3</p>
+            </button>
+        </div>
+    </div>
+    <div class="game-screen" id="gameScreen" style="display: none;">
+        <img id="characterImage" src="images/character1_neutral.png" alt="キャラクター">
+        <p id="dialogue">こんにちは、どうぞよろしくね！</p>
+        <div class="choices">
+            <button class="choice-button" data-index="0">選択肢1</button>
+            <button class="choice-button" data-index="1">選択肢2</button>
+            <button class="choice-button" data-index="2">選択肢3</button>
+        </div>
+        <button id="endButton">ゲーム終了</button>
+    </div>
+    <div class="end-screen" id="endScreen" style="display: none;">
+        <h1 id="endMessage">ゲーム終了</h1>
+        <img id="endImage" src="" alt="エンド画像">
+        <p id="finalScore">最終好感度: 0</p>
+        <button id="restartButton">再スタート</button>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

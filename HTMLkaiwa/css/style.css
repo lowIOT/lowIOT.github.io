@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
+}
+
+.start-screen, .game-screen, .end-screen {
+    margin-top: 50px;
+}
+
+.character-selection {
+    display: flex;
+    justify-content: center;
+}
+
+.character-button {
+    margin: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+}
+
+.character-button img {
+    width: 150px;
+    height: auto;
+}
+
+#characterImage {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.choice-button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 16px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:focus {
+    outline: none;
+}
