@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const choiceButtons = document.querySelectorAll('.choice-button');
     const characterImage = document.getElementById('characterImage');
     const dialogue = document.getElementById('dialogue');
+    const feedback = document.getElementById('feedback');
     const finalScore = document.getElementById('finalScore');
     const endMessage = document.getElementById('endMessage');
     const endImage = document.getElementById('endImage');
@@ -16,29 +17,40 @@ document.addEventListener('DOMContentLoaded', () => {
     let attempts = 0;
     const maxAttempts = 10;
     let selectedCharacter = 1;
+    let usedDialogues = [];
 
     const characterData = {
         1: {
             dialogues: [
-                "こんにちは、どうぞよろしくね！",
-                "もっとお話ししたいな。",
-                "君と一緒にいると楽しいね！",
-                "君と話すのが本当に楽しいよ！",
-                "こんなに楽しいのは久しぶりだよ！"
+                "今日は何をして過ごした？",
+                "どんな食べ物が好き？",
+                "どこか行きたい場所はある？",
+                "趣味は何？",
+                "動物は好き？",
+                "好きな季節は？",
+                "好きな色は？",
+                "スポーツはする？",
+                "旅行は好き？",
+                "どんな音楽が好き？"
             ],
             choices: [
-                ["そうだね！", "まあ、そうかもね。", "いや、違うよ。"],
-                ["それはいいね！", "そうだね。", "あまり興味ないな。"],
-                ["君って面白いね！", "まあまあかな。", "全然だめだね。"],
-                ["一緒にいると楽しい！", "うん、まあね。", "そんなことないよ。"],
-                ["また会いたいな！", "機会があればね。", "もういいかな。"]
+                ["読書をしてたよ。", "友達と遊んでたよ。", "特に何も。"],
+                ["寿司が大好きだよ。", "ラーメンが好きかな。", "野菜はあまり好きじゃない。"],
+                ["海に行きたいな。", "山に行こうかな。", "家にいたい。"],
+                ["音楽を聴くことかな。", "映画を見ること。", "特にない。"],
+                ["大好きだよ！", "まあまあ好きかな。", "あまり好きじゃない。"],
+                ["春が好きだな。", "秋がいいね。", "冬は嫌いだ。"],
+                ["青が好きだよ。", "緑もいいね。", "特にないかな。"],
+                ["サッカーが好きだ。", "たまにバスケットをする。", "運動はあまりしない。"],
+                ["旅行は大好きだ！", "たまにはいいね。", "あまり好きじゃない。"],
+                ["ポップスが好きだよ。", "クラシックもいいね。", "音楽はあまり聴かない。"]
             ],
-            images: [
-                "images/character1_neutral.png",
-                "images/character1_happy.png",
-                "images/character1_very_happy.png",
-                "images/character1_negative.png"
-            ],
+            images: {
+                neutral: "images/character1_neutral.png",
+                happy: "images/character1_happy.png",
+                veryHappy: "images/character1_very_happy.png",
+                negative: "images/character1_negative.png"
+            },
             reward: "images/reward1.png"
         },
         2: {
@@ -47,21 +59,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 "まあ、少しは話してやってもいいけど。",
                 "ふん、一緒にいるのも悪くないかもな。",
                 "お前って意外と面白いな。",
-                "お前と話すのは楽しいな！"
+                "お前と話すのは楽しいな！",
+                "どうしてそんなに興味を持ってるんだ？",
+                "お前の好きなものって何だ？",
+                "一緒に遊びに行かないか？",
+                "もっとお前のことを知りたいんだが。",
+                "お前といるとなんか安心するな。"
             ],
             choices: [
                 ["見てるだけだよ。", "まあまあかな。", "何も見てないよ。"],
                 ["そうだね！", "まあ、そうかもね。", "いや、違うよ。"],
                 ["君って面白いね！", "まあまあかな。", "全然だめだね。"],
                 ["一緒にいると楽しい！", "うん、まあね。", "そんなことないよ。"],
-                ["また会いたいな！", "機会があればね。", "もういいかな。"]
+                ["また会いたいな！", "機会があればね。", "もういいかな。"],
+                ["それが知りたいんだ。", "特に理由はない。", "別に興味はないよ。"],
+                ["ゲームかな。", "アニメだね。", "特にないな。"],
+                ["いいね、行こう！", "また今度ね。", "今日はやめとくよ。"],
+                ["君のことも知りたいな。", "それは秘密だよ。", "あまり話したくないな。"],
+                ["僕もそう感じるよ。", "そうか？", "それは嬉しいな。"]
             ],
-            images: [
-                "images/character2_neutral.png",
-                "images/character2_happy.png",
-                "images/character2_very_happy.png",
-                "images/character2_negative.png"
-            ],
+            images: {
+                neutral: "images/character2_neutral.png",
+                happy: "images/character2_happy.png",
+                veryHappy: "images/character2_very_happy.png",
+                negative: "images/character2_negative.png"
+            },
             reward: "images/reward2.png"
         },
         3: {
@@ -70,21 +92,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 "もう少しお話しできますか？",
                 "あなたと過ごす時間がとても楽しいですわ。",
                 "あなたのお話、とても興味深いですわ。",
-                "あなたと話していると、とても楽しいですわ！"
+                "あなたと話していると、とても楽しいですわ！",
+                "今日は何をされていましたか？",
+                "お好きな食べ物は何ですか？",
+                "どこか行きたい場所はありますか？",
+                "趣味は何ですか？",
+                "動物はお好きですか？"
             ],
             choices: [
                 ["ごきげんよう。", "そうですね。", "さようなら。"],
                 ["もちろんです！", "まあ、少しなら。", "すみません、忙しいです。"],
                 ["私も楽しいです。", "そうですね。", "それはどうでしょうか。"],
                 ["ありがとうございます！", "まあまあですね。", "そうでもないです。"],
-                ["私もです！", "そうですね。", "それはないです。"]
+                ["私もです！", "そうですね。", "それはないです。"],
+                ["仕事をしていました。", "読書をしていました。", "何もしていません。"],
+                ["寿司が好きです。", "ラーメンが好きです。", "特にありません。"],
+                ["海に行きたいです。", "山に行きたいです。", "家にいたいです。"],
+                ["音楽鑑賞です。", "映画鑑賞です。", "特にありません。"],
+                ["大好きです！", "まあまあ好きです。", "あまり好きではありません。"]
             ],
-            images: [
-                "images/character3_neutral.png",
-                "images/character3_happy.png",
-                "images/character3_very_happy.png",
-                "images/character3_negative.png"
-            ],
+            images: {
+                neutral: "images/character3_neutral.png",
+                happy: "images/character3_happy.png",
+                veryHappy: "images/character3_very_happy.png",
+                negative: "images/character3_negative.png"
+            },
             reward: "images/reward3.png"
         }
     };
@@ -96,8 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
             gameScreen.style.display = 'block';
             score = 0;
             attempts = 0;
+            usedDialogues = [];
+            characterImage.src = characterData[selectedCharacter].images.neutral;
             updateGame();
-            randomizeChoices();
         });
     });
 
@@ -114,31 +147,41 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener('click', (e) => {
             const points = parseInt(e.target.getAttribute('data-points'));
             score = Math.max(0, score + points); // Ensure score doesn't go below 0
-            attempts++;
-            if (attempts >= maxAttempts) {
-                endGame();
-            } else {
-                updateGame();
-                randomizeChoices();
-            }
+            feedback.textContent = points > 0 ? `好感度が${points}上がった！` : points < 0 ? `好感度が${Math.abs(points)}下がった。` : '好感度は変わらなかった。';
+            feedback.style.display = 'block';
+            setTimeout(() => {
+                feedback.style.display = 'none';
+                attempts++;
+                if (attempts >= maxAttempts) {
+                    endGame();
+                } else {
+                    updateGame(points);
+                }
+            }, 2000);
         });
     });
 
-    function updateGame() {
+    function updateGame(points = 0) {
         const data = characterData[selectedCharacter];
-        const dialogueIndex = Math.min(Math.floor(score / 2), data.dialogues.length - 1);
-        dialogue.textContent = data.dialogues[dialogueIndex];
-        const imageIndex = score > 0 ? Math.min(Math.floor(score / 4), data.images.length - 2) : data.images.length - 1;
-        characterImage.src = data.images[imageIndex];
-        updateChoices(data.choices[dialogueIndex]);
-    }
+        let dialogueIndex;
+        do {
+            dialogueIndex = Math.floor(Math.random() * data.dialogues.length);
+        } while (usedDialogues.includes(dialogueIndex) && usedDialogues.length < data.dialogues.length);
 
-    function randomizeChoices() {
-        const choicePoints = [2, 0, -1];
-        const shuffledPoints = choicePoints.sort(() => Math.random() - 0.5);
-        choiceButtons.forEach((button, index) => {
-            button.setAttribute('data-points', shuffledPoints[index]);
-        });
+        usedDialogues.push(dialogueIndex);
+        dialogue.textContent = data.dialogues[dialogueIndex];
+        
+        let imageKey;
+        if (points > 0) {
+            imageKey = score > 10 ? 'veryHappy' : 'happy';
+        } else if (points < 0) {
+            imageKey = 'negative';
+        } else {
+            imageKey = score > 10 ? 'veryHappy' : score > 6 ? 'happy' : 'neutral';
+        }
+
+        characterImage.src = data.images[imageKey];
+        updateChoices(data.choices[dialogueIndex]);
     }
 
     function updateChoices(choices) {

@@ -2,18 +2,14 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
 }
 
 .start-screen, .game-screen, .end-screen {
-    margin: 20px;
+    margin-top: 50px;
 }
 
 .character-selection {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
 }
 
@@ -31,8 +27,7 @@ body {
 }
 
 #characterImage {
-    width: 100%;
-    max-width: 300px;
+    width: 200px;
     height: auto;
     margin-bottom: 20px;
 }
@@ -42,8 +37,6 @@ body {
     margin: 10px auto;
     padding: 10px 20px;
     font-size: 16px;
-    width: 80%;
-    max-width: 300px;
 }
 
 button {
@@ -54,14 +47,4 @@ button {
 
 button:focus {
     outline: none;
-}
-
-@media (max-width: 600px) {
-    .character-button img {
-        width: 100px;
-    }
-
-    .choice-button {
-        width: 90%;
-    }
 }

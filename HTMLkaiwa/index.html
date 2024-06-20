@@ -29,10 +29,11 @@
         <img id="characterImage" src="images/character1_neutral.png" alt="キャラクター">
         <p id="dialogue">こんにちは、どうぞよろしくね！</p>
         <div class="choices">
-            <button class="choice-button" data-index="0">選択肢1</button>
-            <button class="choice-button" data-index="1">選択肢2</button>
-            <button class="choice-button" data-index="2">選択肢3</button>
+            <button class="choice-button" data-points="2">選択肢1</button>
+            <button class="choice-button" data-points="0">選択肢2</button>
+            <button class="choice-button" data-points="-1">選択肢3</button>
         </div>
+        <p id="feedback" style="display: none;"></p>
         <button id="endButton">ゲーム終了</button>
     </div>
     <div class="end-screen" id="endScreen" style="display: none;">
